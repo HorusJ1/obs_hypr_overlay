@@ -1,53 +1,71 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Overlay Twitch</title>
-<style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    background: transparent;
-  }
-  #overlay {
-    position: fixed;
-    bottom: 20px;
-    left: -200px; 
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: Arial, sans-serif;
-    font-size: 24px;
-    color: white;
-    text-shadow: 1px 1px 3px black;
-    cursor: pointer;
-    transition: left 2s ease-in-out;
-  }
-  #logo {
-    width: 60px;
-    height: 60px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>Overlay Twitch</title>
+  <style>
+    /* No transitions: everything appears instantly. */
+    body { margin: 0; overflow: hidden; background: transparent; }
+    #overlay {
+      position: fixed;
+      bottom: 20px;
+      left: 18px; /* show immediately */
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 24px;
+      color: white;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
+    }
+
+    /* layout: logo on the left, text on the right, QR below text */
+    #logo {
+      width: 64px; height: 64px; border-radius: 8px;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    #qrLarge {
+      display: block;
+      width: 120px; height: 120px; border-radius: 12px;
+      margin-top: 8px;
+    }
+
+  /* textArea: text column on the left, QR on the right */
+  #textArea { display:flex; flex-direction:row; gap:18px; align-items:center; justify-content:center; }
+  #textColumn { display:flex; flex-direction:column; gap:6px; align-items:flex-start; }
+  .state { opacity: 1; transform: none; white-space: nowrap; }
+
+    /* Title: separate HYPERION so only it flickers */
+    #title { font-weight: 700; letter-spacing: 1px; }
+    #title .hyperion { display:inline-block; }
+
+    /* flicker animation for HYPERION */
+    @keyframes flicker {
+      0% { opacity: 1; filter: brightness(1); }
+      10% { opacity: 0.88; filter: brightness(0.95); }
+      20% { opacity: 1; filter: brightness(1.06); }
+      30% { opacity: 0.92; filter: brightness(0.98); }
+      40% { opacity: 1; filter: brightness(1.02); }
+      100% { opacity: 1; filter: brightness(1); }
+    }
+    .flicker { animation: flicker 1.6s linear infinite; }
+
+    .small { font-size: 16px; color: #cfefff; }
+  </style>
 </head>
 <body>
-<div id="overlay" onclick="alert('Rejoignez-nous !')">
-  <img id="logo" src="HYPERION-Discord.gif" alt="Logo Org">
-  <div>
-    <div>HYPERION Interstellar</div>
-    <div style="font-size: 18px;">Nous rejoindre</div>
+  <div id="overlay" aria-label="Overlay Hyperion">
+    <img id="logo" src="HYPERION-Discord.gif" alt="Logo Hyperion">
+    <div id="textArea" aria-live="polite">
+      <div id="textColumn">
+        <div id="title" class="state" aria-hidden="false"><span class="hyperion flicker">HYPERION</span>&nbsp;INTERSTELLAR</div>
+  <div id="join" class="state"><div class="small">Nous rejoindre — scannez le QR</div></div>
+      </div>
+      <img id="qrLarge" src="qr.png" alt="QR code - Rejoindre Hyperion" />
+    </div>
   </div>
-</div>
 
-<script>
-  window.onload = () => {
-    const overlay = document.getElementById('overlay');
-    setTimeout(() => { overlay.style.left = '20px'; }, 500);
-
-    const logo = document.getElementById('logo');
-    setInterval(() => {
-      logo.style.transform = `translateY(${Math.sin(Date.now()/200)*5}px)`;
-    }, 30);
-  }
-</script>
+  
 </body>
 </html>
