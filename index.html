@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Overlay Twitch</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: transparent;
+  }
+  #overlay {
+    position: fixed;
+    bottom: 20px;
+    left: -200px; 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: white;
+    text-shadow: 1px 1px 3px black;
+    cursor: pointer;
+    transition: left 2s ease-in-out;
+  }
+  #logo {
+    width: 60px;
+    height: 60px;
+  }
+</style>
+</head>
+<body>
+<div id="overlay" onclick="alert('Rejoignez-nous !')">
+  <img id="logo" src="HYPERION-Discord.gif" alt="Logo Org">
+  <div>
+    <div>HYPERION Interstellar</div>
+    <div style="font-size: 18px;">Nous rejoindre</div>
+  </div>
+</div>
+
+<script>
+  window.onload = () => {
+    const overlay = document.getElementById('overlay');
+    setTimeout(() => { overlay.style.left = '20px'; }, 500);
+
+    const logo = document.getElementById('logo');
+    setInterval(() => {
+      logo.style.transform = `translateY(${Math.sin(Date.now()/200)*5}px)`;
+    }, 30);
+  }
+</script>
+</body>
+</html>
