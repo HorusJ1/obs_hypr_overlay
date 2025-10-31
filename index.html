@@ -11,7 +11,7 @@
       bottom: 20px;
       left: 18px; /* show immediately */
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* align logo with the title line */
       gap: 14px;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 24px;
@@ -60,9 +60,9 @@
     <div id="textArea" aria-live="polite">
       <div id="textColumn">
         <div id="title" class="state" aria-hidden="false"><span class="hyperion flicker">HYPERION</span>&nbsp;INTERSTELLAR</div>
-  <div id="join" class="state"><div class="small">Nous rejoindre — scannez le QR</div></div>
+        <div id="join" class="state"><div class="small">Nos réseaux :</div></div>
+        <img id="qrLarge" src="qr.png" alt="QR code - Rejoindre Hyperion" />
       </div>
-      <img id="qrLarge" src="qr.png" alt="QR code - Rejoindre Hyperion" />
     </div>
   </div>
 
