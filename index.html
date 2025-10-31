@@ -24,11 +24,13 @@
       width: 64px; height: 64px; border-radius: 8px;
       margin-right: 12px;
       flex-shrink: 0;
+      margin-top: 28px; /* légèrement descendre le logo */
     }
     #qrLarge {
       display: block;
       width: 120px; height: 120px; border-radius: 12px;
-      margin-top: 8px;
+      align-self: center;
+      margin-top: 0;
     }
 
   /* textArea: text column on the left, QR on the right */
@@ -36,17 +38,42 @@
   #textColumn { display:flex; flex-direction:column; gap:6px; align-items:flex-start; }
   .state { opacity: 1; transform: none; white-space: nowrap; }
 
-    /* Title: separate HYPERION so only it flickers */
-    #title { font-weight: 700; letter-spacing: 1px; }
-    #title .hyperion { display:inline-block; }
+    /* Title: apply stellar effect to the whole title */
+    #title { font-weight: 800; letter-spacing: 1.6px; font-size: 28px; line-height:1; }
+    /* animated cosmic gradient + text glow - apply to any element with .hyperion */
+    .hyperion {
+      display:inline-block;
+      background: linear-gradient(90deg, #dff9ff 0%, #b8ecff 25%, #ffffff 50%, #a8d4ff 75%, #dff9ff 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 6px rgba(80,180,255,0.14), 0 6px 20px rgba(60,150,255,0.12);
+      filter: drop-shadow(0 6px 18px rgba(50,160,255,0.18));
+      transform-origin: left center;
+      animation: gradientShift 3.8s linear infinite, glowPulse 2.8s ease-in-out infinite;
+    }
 
-    /* flicker animation for HYPERION */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* stronger periodic glow/pulse for grandeur */
+    @keyframes glowPulse {
+      0% { transform: scale(1); text-shadow: 0 2px 6px rgba(80,180,255,0.12), 0 6px 20px rgba(60,150,255,0.10); filter: drop-shadow(0 6px 18px rgba(50,160,255,0.12)); }
+      50% { transform: scale(1.04); text-shadow: 0 4px 12px rgba(130,220,255,0.28), 0 10px 34px rgba(90,190,255,0.20); filter: drop-shadow(0 10px 30px rgba(70,180,255,0.26)); }
+      100% { transform: scale(1); text-shadow: 0 2px 6px rgba(80,180,255,0.12), 0 6px 20px rgba(60,150,255,0.10); filter: drop-shadow(0 6px 18px rgba(50,160,255,0.12)); }
+    }
+
+    /* keep a subtle vintage flicker layered on top for atmosphere */
     @keyframes flicker {
       0% { opacity: 1; filter: brightness(1); }
-      10% { opacity: 0.88; filter: brightness(0.95); }
-      20% { opacity: 1; filter: brightness(1.06); }
-      30% { opacity: 0.92; filter: brightness(0.98); }
-      40% { opacity: 1; filter: brightness(1.02); }
+      12% { opacity: 0.9; filter: brightness(0.95); }
+      24% { opacity: 1; filter: brightness(1.08); }
+      36% { opacity: 0.94; filter: brightness(0.98); }
+      48% { opacity: 1; filter: brightness(1.02); }
       100% { opacity: 1; filter: brightness(1); }
     }
     .flicker { animation: flicker 1.6s linear infinite; }
@@ -59,10 +86,9 @@
     <img id="logo" src="HYPERION-Discord.gif" alt="Logo Hyperion">
     <div id="textArea" aria-live="polite">
       <div id="textColumn">
-        <div id="title" class="state" aria-hidden="false"><span class="hyperion flicker">HYPERION</span>&nbsp;INTERSTELLAR</div>
-        <div id="join" class="state"><div class="small">Nos réseaux :</div></div>
-        <img id="qrLarge" src="qr.png" alt="QR code - Rejoindre Hyperion" />
+  <div id="title" class="state hyperion flicker" aria-hidden="false">HYPERION&nbsp;INTERSTELLAR</div>
       </div>
+      <img id="qrLarge" src="qr.png" alt="QR code - Rejoindre Hyperion" />
     </div>
   </div>
 
